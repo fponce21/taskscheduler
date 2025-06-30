@@ -1,0 +1,27 @@
+# Spring Boot Configuration
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/taskscheduler
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+# Server port
+server:
+  port: 8080
+
+# Application-specific config
+app:
+  rabbitmq:
+    queue: task-queue
+    exchange: task-exchange
+    routingkey: task-routing-key
