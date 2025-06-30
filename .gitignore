@@ -11,6 +11,7 @@
 *.zip
 *.tar.gz
 *.rar
+*.settings
 
 target/  # Maven's build output directory
 pom.xml.tag
