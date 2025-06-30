@@ -1,0 +1,39 @@
+/build/
+/target/
+
+# Compiled class file
+*.class
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+target/  # Maven's build output directory
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Eclipse m2e generated files
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+.mvn/wrapper/maven-wrapper.jar
+
+
+
