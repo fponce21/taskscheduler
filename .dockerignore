@@ -1,0 +1,28 @@
+# Maven build artifacts
+target/
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+
+# IDE/workspace configs
+.idea/
+*.iml
+.vscode/
+*.sw?
+
+# Git
+.git
+.gitignore
+
+# Docker artifacts
+.dockerignore
+Dockerfile
+
+# Other temp files
+*.tmp
+*.bak
+*.swp

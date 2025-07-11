@@ -1,45 +1,76 @@
 package com.taskscheduler.model;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
+/**
+ * Represents a task entity stored in the database.
+ */
 @Entity
 @Table(name = "tasks")
-public class Task {
+public class Task implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String status; // e.g. PENDING, IN_PROGRESS, COMPLETED, FAILED
+    @Column(nullable = true)
+    private String schedule;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Status status;
 
-    @Column
-    private LocalDateTime completedAt;
+    @Column(name = "retry_count", nullable = false)
+    private int retryCount = 0;
 
-    // Constructors
-    public Task() {}
+    @Column(name = "execution_node", length = 50)
+    private String executionNode;
 
-    public Task(String name, String status) {
-        this.name = name;
-        this.status = status;
-        this.createdAt = LocalDateTime.now();
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private ZonedDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private ZonedDateTime updatedAt;
+
+
+	@PrePersist
+    protected void onCreate() {
+        this.createdAt = ZonedDateTime.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = ZonedDateTime.now();
+    }
+
+    // Enum for status
+    public enum Status {
+        PENDING,
+        RUNNING,
+        COMPLETED,
+        FAILED
     }
 
     // Getters and Setters
+
     public UUID getId() {
         return id;
     }
@@ -56,27 +87,43 @@ public class Task {
         this.name = name;
     }
 
-    public String getStatus() {
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public int getRetryCount() {
+        return retryCount;
+    }
+
+    public void setRetryCount(int retryCount) {
+        this.retryCount = retryCount;
+    }
+
+    public String getExecutionNode() {
+        return executionNode;
+    }
+
+    public void setExecutionNode(String executionNode) {
+        this.executionNode = executionNode;
+    }
+
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getCompletedAt() {
-        return completedAt;
-    }
-
-    public void setCompletedAt(LocalDateTime completedAt) {
-        this.completedAt = completedAt;
+    public ZonedDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }

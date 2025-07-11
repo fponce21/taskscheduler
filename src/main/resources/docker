@@ -1,0 +1,18 @@
+# Use an official OpenJDK image with JDK 17
+FROM eclipse-temurin:17-jdk-alpine
+
+# Set environment variables for better compatibility
+ENV TZ=UTC
+ENV LANG=en_US.UTF-8
+
+# Create app directory inside container
+WORKDIR /app
+
+# Copy the executable JAR into the container
+COPY target/task-scheduler.jar app.jar
+
+# Expose the port your app runs on (matches server.port in application.yml)
+EXPOSE 8080
+
+# Run the JAR
+ENTRYPOINT ["java", "-jar", "app.jar"]
